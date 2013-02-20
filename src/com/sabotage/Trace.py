@@ -1,11 +1,11 @@
 def writeIntoFile(trace):
-    fichier = open("executiontrace.txt", "a")
+    fichier = open('executiontrace.txt', 'a')
 
-    if "begin" in trace :
-        fichier.write("\n--NEW EXECUTION--\n")
-    elif "end" in trace :
-        fichier.write("--END OF EXECUTION--\n")
+    if 'begin' in trace :
+        fichier.write('\n--NEW EXECUTION--\n')
+    elif 'end' in trace :
+        fichier.write('--END OF EXECUTION--\n')
     else :
-        fichier.write(trace + "\n")
+        fichier.write(trace + '\n')
 
     fichier.close()

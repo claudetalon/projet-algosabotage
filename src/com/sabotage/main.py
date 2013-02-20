@@ -20,6 +20,7 @@ def play(graph, currentPosition, goal)
 from RandomBlocker import RandomBlocker
 from OmnicientBlocker import OmnicientBlocker
 from Runner import Runner
+from Trace import writeIntoFile
 
 if __name__ == '__main__':
     
@@ -55,24 +56,28 @@ if __name__ == '__main__':
     runner = Runner(graph, current, goal)
     blocker = OmnicientBlocker()
    
-   
+    writeIntoFile('begin')
+
     print ('runner start '+str(runner.current)+' goal '+str(runner.goal))
+    writeIntoFile('runner start '+str(runner.current)+' goal '+str(runner.goal))
     ###
     while(run):
         newPos = runner.play(graph, current, goal)        
         print ('runner old position '+str(current)+' new position '+str(newPos))
-        
-        current=newPos;
+        writeIntoFile('runner old position '+str(current)+' new position '+str(newPos))
+        current=newPos
         if(current == -1 or current == goal):
             run=False
             if(current==goal):
                 print('runner has won')
+                writeIntoFile('runner as won')
             else:
                 print('runner has lost')
+                writeIntoFile('runner as lost')
             continue
 
         blocker.play(current, graph, goal)            
     ###
     
     print ('fin du programme')
-    
+    writeIntoFile('end')
