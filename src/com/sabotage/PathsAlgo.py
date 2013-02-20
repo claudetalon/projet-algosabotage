@@ -27,6 +27,8 @@ def find_all_paths(graph, start, end, path=[]):
 
 def vertex_of_optimized_path(graph, pathsList):
     
+    print('The runner has found paths : ', len(pathsList))
+    
     # Cannot go to goal
     if len(pathsList) == 0:
         return -1
@@ -58,8 +60,8 @@ def vertex_of_optimized_path(graph, pathsList):
     for i in range(1, len(edges)):
         if edges[i] > maxEdges:
             maxEdges = edges[i]
-            edgesEquality.clear()
-            edgesEquality.append(l[edges[i]])
+            edgesEquality = []
+            edgesEquality.append(l[i])
         elif edges[i] == maxEdges:
             edgesEquality.append(l[i])
         
@@ -77,5 +79,6 @@ def edges_number(path, graph):
     return edges
 
 if __name__ == '__main__':
-    graph = [[0,2,0,1],[0,0,1,0],[1,0,0,1],[0,1,0,0]]
-    print(vertex_of_optimized_path(graph, find_all_paths(graph, 2, 0,[])))
+    #graph = [[0,1,0,1],[0,0,1,0],[1,0,0,1],[0,1,0,0]]
+    graph = [[0,1,0,0,1,0,0,0,0],[1,0,2,1,1,0,0,0,0],[0,0,0,1,0,0,1,0,0],[0,0,0,0,0,2,0,0,0],[1,0,0,0,0,1,0,0,0],[0,0,0,0,0,0,0,2,0],[0,0,0,0,0,2,0,0,1],[0,0,0,0,0,0,1,0,2],[0,0,0,0,0,0,0,0,0]]
+    print(vertex_of_optimized_path(graph, find_all_paths(graph, 0, 8,[])))
