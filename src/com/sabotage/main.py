@@ -70,10 +70,10 @@ if __name__ == '__main__':
             run=False
             if(current==goal):
                 print('runner has won')
-                writeIntoFile('runner as won')
+                writeIntoFile('runner has won')
             else:
                 print('runner has lost')
-                writeIntoFile('runner as lost')
+                writeIntoFile('runner has lost')
             continue
 
         blocker.play(current, graph, goal)            
