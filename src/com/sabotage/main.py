@@ -16,45 +16,45 @@ class Runner:
 def play(graph, currentPosition, goal)
 -> return sommet ou -1 si perdu
 '''
-from Blocker import Blocker
 from RandomBlocker import RandomBlocker
-
-
-class Graphe:
-    def __init__(self):
-        return;
-    
-
-class Runner:
-    def __init__(self): 
-        return;
-    def play(self,position,graphe,goal):
-        res = -1;
-        return res;
-            
+from Runner import Runner
         
 if __name__ == '__main__':
     
-    print ('debut main');
+    print ('debut main')
     
-    runner = Runner();
-    blocker = Blocker();
-    graphe = Graphe();
-    goal = 1;
-        
-    run = True;
+    run = True
     
+    '''
+    goal = 1
+    current = 2    
+    graph = [[0,1,0,1],[0,0,1,0],[1,0,0,1],[0,1,0,0]]
+    '''
+     
+    goal = 2
+    current = 0   
+    graph =[[0,1,0],[0,0,1],[1,0,0]]
+    
+    runner = Runner(graph, current, goal)
+    blocker = RandomBlocker()
+   
+   
+    print ('runner start '+str(runner.current)+' goal '+str(runner.goal))
     ###
     while(run):
-        runnerRes = runner.play(0,graphe,1);
-        if(runnerRes == -1 or runnerRes == goal):
+        newPos = runner.play(graph, current, goal);        
+        print ('runner old position '+str(current)+' new position '+str(newPos))
+        
+        current=newPos;
+        if(current == -1 or current == goal):
             run=False;
-            if(runnerRes==goal):
+            if(current==goal):
                 print('runner win');
             else:
                 print('runner lose');
-                
-        blocker.play(0, graphe);            
+            continue
+        
+        blocker.play(0, graph);            
     ###
     
     print ('fin du programme');

@@ -6,13 +6,16 @@ class RandomBlocker(Blocker):
         return
 
     def play(self, position, graph):
+    
         nbEdges=0
-        for a in graph:
-            for b in a:
-                nbEdges+=b
-        removed=radint(0,nbEdges-1)
-        for (a,b) in graph:
-            for (c,d) in b:
+        for i in graph:
+            for j in i:
+                nbEdges+=j
+                
+        removed=randint(0,nbEdges-1)
+        print ('removed '+str(removed))
+        for (a,b) in enumerate(graph):
+            for (c,d) in enumerate(b):
                 if d>0:
                     if removed<d:
                         graph[a][c]-=1
