@@ -59,20 +59,20 @@ if __name__ == '__main__':
     print ('runner start '+str(runner.current)+' goal '+str(runner.goal))
     ###
     while(run):
-        newPos = runner.play(graph, current, goal);        
+        newPos = runner.play(graph, current, goal)        
         print ('runner old position '+str(current)+' new position '+str(newPos))
         
         current=newPos;
         if(current == -1 or current == goal):
-            run=False;
+            run=False
             if(current==goal):
-                print('runner has won');
+                print('runner has won')
             else:
-                print('runner has lost');
+                print('runner has lost')
             continue
 
-        blocker.play(current, graph, goal);            
+        blocker.play(current, graph, goal)            
     ###
     
-    print ('fin du programme');
+    print ('fin du programme')
     
