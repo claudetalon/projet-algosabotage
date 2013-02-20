@@ -1,3 +1,4 @@
+# coding=UTF-8
 '''
 Created on 19 févr. 2013
 
@@ -17,8 +18,9 @@ def play(graph, currentPosition, goal)
 -> return sommet ou -1 si perdu
 '''
 from RandomBlocker import RandomBlocker
+from OmnicientBlocker import OmnicientBlocker
 from Runner import Runner
-        
+
 if __name__ == '__main__':
     
     print ('debut main')
@@ -36,7 +38,7 @@ if __name__ == '__main__':
     graph =[[0,1,0],[0,0,1],[1,0,0]]
     
     runner = Runner(graph, current, goal)
-    blocker = RandomBlocker()
+    blocker = OmnicientBlocker()
    
    
     print ('runner start '+str(runner.current)+' goal '+str(runner.goal))
@@ -54,7 +56,7 @@ if __name__ == '__main__':
                 print('runner lose');
             continue
         
-        blocker.play(0, graph);            
+        blocker.play(0, graph, goal);            
     ###
     
     print ('fin du programme');
