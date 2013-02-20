@@ -16,20 +16,14 @@ class Runner:
 def play(graph, currentPosition, goal)
 -> return sommet ou -1 si perdu
 '''
-
+from Blocker import Blocker
+from RandomBlocker import RandomBlocker
 
 
 class Graphe:
     def __init__(self):
         return;
     
-class Blocker:     
-    def __init__(self): 
-        return;
-    
-    def play(self,position,graphe):
-        res = Graphe()
-        return res;
 
 class Runner:
     def __init__(self): 
