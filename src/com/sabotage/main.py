@@ -27,16 +27,31 @@ if __name__ == '__main__':
     
     run = True
     
-    
+    '''
     goal = 1
     current = 2    
     graph = [[0,1,0,1],[0,0,1,0],[1,0,0,1],[0,1,0,0]]
+    '''
     
     ''' 
     goal = 2
     current = 0   
     graph =[[0,1,0],[0,0,1],[1,0,0]]
     '''
+
+    graph = [[0,1,0,0,1,0,0,0,0],
+             [1,0,2,1,1,0,0,0,0],
+             [0,0,0,1,0,0,1,0,0],
+             [0,0,0,0,0,2,0,0,0],
+             [1,0,0,0,0,1,0,0,0],
+             [0,0,0,0,0,0,0,2,0],
+             [0,0,0,0,0,2,0,0,1],
+             [0,0,0,0,0,0,1,0,2],
+             [0,0,0,0,0,0,0,0,0]]
+
+    current = 0
+    goal = 8
+
     runner = Runner(graph, current, goal)
     blocker = OmnicientBlocker()
    
@@ -51,11 +66,11 @@ if __name__ == '__main__':
         if(current == -1 or current == goal):
             run=False;
             if(current==goal):
-                print('runner win');
+                print('runner has won');
             else:
-                print('runner lose');
+                print('runner has lost');
             continue
-        
+
         blocker.play(current, graph, goal);            
     ###
     
