@@ -27,16 +27,16 @@ if __name__ == '__main__':
     
     run = True
     
-    '''
+    
     goal = 1
     current = 2    
     graph = [[0,1,0,1],[0,0,1,0],[1,0,0,1],[0,1,0,0]]
-    '''
-     
+    
+    ''' 
     goal = 2
     current = 0   
     graph =[[0,1,0],[0,0,1],[1,0,0]]
-    
+    '''
     runner = Runner(graph, current, goal)
     blocker = OmnicientBlocker()
    
@@ -56,7 +56,7 @@ if __name__ == '__main__':
                 print('runner lose');
             continue
         
-        blocker.play(0, graph, goal);            
+        blocker.play(current, graph, goal);            
     ###
     
     print ('fin du programme');
