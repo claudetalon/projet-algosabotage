@@ -2,15 +2,12 @@ from random import randint
 
 def find_all_paths(graph, start, end, path=[]):
 
-    if start == end and path == []:
+    if (start == end and path == []) or start > len(graph):
         return []
 
     path = path + [start]
     if start == end:
         return [path]
-    
-    if start > len(graph):
-        return []
     
     paths = []
     
