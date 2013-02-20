@@ -1,6 +1,10 @@
 from random import randint
 
 def find_all_paths(graph, start, end, path=[]):
+
+    if start == end and path == []:
+        return []
+
     path = path + [start]
     if start == end:
         return [path]
@@ -77,4 +81,4 @@ def edges_number(path, graph):
 
 if __name__ == '__main__':
     graph = [[0,2,0,1],[0,0,1,0],[1,0,0,1],[0,1,0,0]]
-    print(vertex_of_optimized_path(graph, find_all_paths(graph, 2, 1, [])))
+    print(vertex_of_optimized_path(graph, find_all_paths(graph, 2, 0,[])))
