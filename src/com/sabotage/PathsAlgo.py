@@ -77,8 +77,3 @@ def edges_number(path, graph):
         edges = edges + graph[path[i]][path[i+1]]
 
     return edges
-
-if __name__ == '__main__':
-    #graph = [[0,1,0,1],[0,0,1,0],[1,0,0,1],[0,1,0,0]]
-    graph = [[0,1,0,0,1,0,0,0,0],[1,0,2,1,1,0,0,0,0],[0,0,0,1,0,0,1,0,0],[0,0,0,0,0,2,0,0,0],[1,0,0,0,0,1,0,0,0],[0,0,0,0,0,0,0,2,0],[0,0,0,0,0,2,0,0,1],[0,0,0,0,0,0,1,0,2],[0,0,0,0,0,0,0,0,0]]
-    print(vertex_of_optimized_path(graph, find_all_paths(graph, 0, 8,[])))

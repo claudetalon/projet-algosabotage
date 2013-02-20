@@ -1,2 +1,5 @@
 # Don't track python bytecode
 *.pyc
+
+# Don't track algorithm results
+*.txt
