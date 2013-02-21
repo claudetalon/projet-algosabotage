@@ -1,6 +1,7 @@
 from Blocker import Blocker
 import copy
 from PathsAlgo import find_all_paths
+from Trace import writeIntoFile
 
 class OmnicientBlocker(Blocker):
     def __init__(self):
@@ -17,6 +18,7 @@ class OmnicientBlocker(Blocker):
         else:
             self.maxLevel-=1
         print('removed'+str(move[1]))
+        writeIntoFile('removed'+str(move[1]))
         graph[move[1][0]][move[1][1]]-=1
         return
 
