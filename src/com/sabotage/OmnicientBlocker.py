@@ -3,11 +3,19 @@ import copy
 from PathsAlgo import find_all_paths
 
 class OmnicientBlocker(Blocker):
-    def __init__(self): 
+    def __init__(self):
+        self.maxLevel=0
         return
 
     def play(self, position, graph, goal):
-        move=self.blockerPlay(position,graph,goal, 5, -1000, 1000)
+        move=(0,(-1,-1))
+        while move[0]!=1000 and self.maxLevel<5:
+            self.maxLevel+=1
+            move=self.blockerPlay(position,graph,goal, self.maxLevel, -1000, 1000)
+        if move[0]==1000:
+            self.maxLevel-=2
+        else:
+            self.maxLevel-=1
         print('removed'+str(move[1]))
         graph[move[1][0]][move[1][1]]-=1
         return
@@ -43,4 +51,4 @@ class OmnicientBlocker(Blocker):
                         beta=score
                         if alpha>=beta:
                             return beta
-        return min
+        return beta
