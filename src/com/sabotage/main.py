@@ -62,9 +62,12 @@ if __name__ == '__main__':
     writeIntoFile('runner start '+str(runner.current)+' goal '+str(runner.goal))
     ###
     while(run):
-        newPos = runner.play(graph, current, goal)        
-        print ('runner old position '+str(current)+' new position '+str(newPos))
-        writeIntoFile('runner old position '+str(current)+' new position '+str(newPos))
+        newPos = runner.play(graph, current, goal)
+        
+        if (newPos != -1):
+            print ('runner old position '+str(current)+' new position '+str(newPos))
+            writeIntoFile('runner old position '+str(current)+' new position '+str(newPos))
+        
         current=newPos
         if(current == -1 or current == goal):
             run=False
