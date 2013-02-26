@@ -1,5 +1,6 @@
 from Blocker import Blocker
 from random import randint
+from Trace import writeIntoFile
 
 class RandomBlocker(Blocker):
     def __init__(self): 
@@ -13,12 +14,13 @@ class RandomBlocker(Blocker):
                 nbEdges+=j
                 
         removed=randint(0,nbEdges-1)
-        print ('removed '+str(removed))
         for (a,b) in enumerate(graph):
             for (c,d) in enumerate(b):
                 if d>0:
                     if removed<d:
                         graph[a][c]-=1
+                        print ('removed '+'('+str(a)+','+str(c)+')')
+                        writeIntoFile('removed '+'('+str(a)+','+str(c)+')')
                         return
                     else:
                         removed-=d
