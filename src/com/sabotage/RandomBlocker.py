@@ -19,7 +19,6 @@ class RandomBlocker(Blocker):
                 if d>0:
                     if removed<d:
                         graph[a][c]-=1
-                        print ('removed '+'('+str(a)+','+str(c)+')')
                         writeIntoFile('removed '+'('+str(a)+','+str(c)+')')
                         return
                     else:

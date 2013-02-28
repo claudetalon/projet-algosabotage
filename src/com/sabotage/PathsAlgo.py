@@ -27,8 +27,7 @@ def find_all_paths(graph, start, end, path=[]):
     return paths
 
 def vertex_of_optimized_path(graph, pathsList):
-    
-    print('The runner has found paths : ', len(pathsList))
+
     valpath = str(len(pathsList))
     writeIntoFile('The runner has found paths : ' + valpath)
     writeIntoFile(str(pathsList))

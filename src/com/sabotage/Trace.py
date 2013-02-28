@@ -7,5 +7,5 @@ def writeIntoFile(trace):
         fichier.write('--END OF EXECUTION--\n')
     else :
         fichier.write(trace + '\n')
-
+    print(trace)
     fichier.close()

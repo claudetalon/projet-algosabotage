@@ -17,7 +17,6 @@ class OmnicientBlocker(Blocker):
             self.maxLevel-=2
         else:
             self.maxLevel-=1
-        print('removed'+str(move[1]))
         writeIntoFile('removed'+str(move[1]))
         graph[move[1][0]][move[1][1]]-=1
         return
