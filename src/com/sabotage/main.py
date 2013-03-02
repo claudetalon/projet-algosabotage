@@ -5,10 +5,11 @@ from OmnicientBlocker import OmnicientBlocker
 from FinishBlocker import FinishBlocker
 from Runner import Runner
 from Trace import writeIntoFile
+from Matrix import maxtrixListGenerator
 
 if __name__ == '__main__':
     
-    run = True
+    
     
     '''
     goal = 1
@@ -21,7 +22,7 @@ if __name__ == '__main__':
     current = 0   
     graph =[[0,1,0],[0,0,1],[1,0,0]]
     '''
-    
+    '''
     graph = [[0,1,0,0,1,0,0,0,0],
              [1,0,2,1,1,0,0,0,0],
              [0,0,0,1,0,0,1,0,0],
@@ -31,35 +32,43 @@ if __name__ == '__main__':
              [0,0,0,0,0,2,0,0,1],
              [0,0,0,0,0,0,1,0,2],
              [0,0,0,0,0,0,0,0,0]]
-    
-    
-    
-    
+    '''
+        
+    ''' graphs types '''
+    nbVertex = 10
+    nbEdges = 25
 
-    current = 0
-    goal = 8
+    ''' graph list length '''
+    nbGraph = 10
 
-    runner = Runner(graph, current, goal)
-    blocker = FinishBlocker()
-    blocker.setupBlocker(current,graph,goal)
+    graphList = maxtrixListGenerator(nbGraph, nbVertex, nbEdges)
+
+    for i in range(0, nbGraph) :
+        run = True
+        graph = graphList[i]
+        current = 0
+        goal = nbVertex -1
+
+        writeIntoFile('begin')
+
+        runner = Runner(graph, current, goal)
+        blocker = FinishBlocker()
+        blocker.setupBlocker(current,graph,goal)
    
-    writeIntoFile('begin')
+        writeIntoFile('runner start '+str(runner.current)+' goal '+str(runner.goal))
+        ###
+        while(run):
+            newPos = runner.play(graph, current, goal)        
+            writeIntoFile('runner old position '+str(current)+' new position '+str(newPos))
+            current=newPos
+            if(current == -1 or current == goal):
+                run=False
+                if(current==goal):
+                    writeIntoFile('runner has won')
+                else:
+                    writeIntoFile('runner has lost')
+                continue
 
-   
-    writeIntoFile('runner start '+str(runner.current)+' goal '+str(runner.goal))
-    ###
-    while(run):
-        newPos = runner.play(graph, current, goal)        
-        writeIntoFile('runner old position '+str(current)+' new position '+str(newPos))
-        current=newPos
-        if(current == -1 or current == goal):
-            run=False
-            if(current==goal):
-                writeIntoFile('runner has won')
-            else:
-                writeIntoFile('runner has lost')
-            continue
-
-        blocker.play(current, graph, goal)            
-    ###
-    writeIntoFile('end')
+            blocker.play(current, graph, goal)            
+        ###
+        writeIntoFile('end')

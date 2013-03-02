@@ -6,7 +6,6 @@ from Trace import writeIntoFile
 class FinishBlocker(OmnicientBlocker):
 
     def __init__(self):
-        print ('init finish blocker')
         super().__init__();        
         self.startBlockingAtGoal=False;
         return
@@ -25,48 +24,49 @@ class FinishBlocker(OmnicientBlocker):
         '''chercher le plus court chemin possible'''
         minpathlist = sorted(pathlist, key = lambda p : len(p) )
         
-        minpath=minpathlist[0]
+        if len(minpathlist) != 0 :
+            minpath=minpathlist[0]
         
-        '''regarder si il y a plusieurs meilleurs chemins de taille egale'''
-        equalminpath=[]
-        for path in pathlist :
-            if len(path) == len(minpath) :
-                equalminpath.append(path)
+            '''regarder si il y a plusieurs meilleurs chemins de taille egale'''
+            equalminpath=[]
+            for path in pathlist :
+                if len(path) == len(minpath) :
+                    equalminpath.append(path)
 
-        '''cherche le chemin ayant le plus d'aretes parmis les chemins minimum'''
-        if(len(equalminpath)>1): 
-            strp=''  
-            for p in equalminpath :
-                strp+=str(p)+' '+ str(edges_number(p,graph))+' '
-            print('equalminpath '+str(len(equalminpath))+ ' : '+strp)
+            '''cherche le chemin ayant le plus d'aretes parmis les chemins minimum'''
+            if(len(equalminpath)>1): 
+                strp=''  
+                for p in equalminpath :
+                    strp+=str(p)+' '+ str(edges_number(p,graph))+' '
+                writeIntoFile('equalminpath '+str(len(equalminpath))+ ' : '+strp)
             
-            minpath = max(equalminpath, key=lambda p: edges_number(p,graph))
+                minpath = max(equalminpath, key=lambda p: edges_number(p,graph))
             
                         
-        lengthminpath = len(minpath)
-        nbedgesminpath = edges_number(minpath,graph)
+            lengthminpath = len(minpath)
+            nbedgesminpath = edges_number(minpath,graph)
         
-        print('setup blocker ' + str(len(pathlist))+ ' path min path is ' + str(minpath) + ' with length '+ str(lengthminpath) 
-              + ' with ' +str(nbedgesminpath)+' edges')
+            writeIntoFile('setup blocker ' + str(len(pathlist))+ ' path min path is ' + str(minpath) + ' with length '+ str(lengthminpath) 
+                  + ' with ' +str(nbedgesminpath)+' edges')
         
-        numberOfRunnerTurn=len(minpath)-1
+            numberOfRunnerTurn=len(minpath)-1
         
-        '''nombre d'aretes relié au noeud goal'''
-        goalEdges=0
-        for index , node in enumerate(graph):
-            if(index!=goal):
-                goalEdges+=node[goal]
+            '''nombre d'aretes relié au noeud goal'''
+            goalEdges=0
+            for index , node in enumerate(graph):
+                if(index!=goal):
+                    goalEdges+=node[goal]
         
-        print('runner min turn '+str(numberOfRunnerTurn)+' goalEdges '+str(goalEdges))
+            writeIntoFile('runner min turn '+str(numberOfRunnerTurn)+' goalEdges '+str(goalEdges))
 
-        '''commencer a enlever les aretes a partir de la fin si numberOfRunnerTurn > goalEdges'''
+            '''commencer a enlever les aretes a partir de la fin si numberOfRunnerTurn > goalEdges'''
         
-        if(numberOfRunnerTurn>goalEdges) : 
-            print('use goal blocking')
-            self.startBlockingAtGoal=True
-        else :
-            print('don\'t use goal blocking')            
-            self.startBlockingAtGoal=False
+            if(numberOfRunnerTurn>goalEdges) : 
+                writeIntoFile('use goal blocking')
+                self.startBlockingAtGoal=True
+            else :
+                writeIntoFile('don\'t use goal blocking')            
+                self.startBlockingAtGoal=False
         
         
     def play(self, position, graph, goal):
@@ -86,7 +86,7 @@ class FinishBlocker(OmnicientBlocker):
                     node[goal]-=1
                     break
                 
-        print ('removed edge of node '+str(removed))
+        writeIntoFile ('removed edge of node '+str(removed))
         return
         
         
