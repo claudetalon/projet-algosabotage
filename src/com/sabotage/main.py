@@ -54,7 +54,7 @@ if __name__ == '__main__':
         runner = Runner(graph, current, goal)
         blocker = OmnicientBlocker()        
         #blocker = FinishBlocker()
-        #blocker.setupBlocker(current,graph,goal)
+        blocker.setupBlocker(current,graph,goal)
    
         writeIntoFile('runner start '+str(runner.current)+' goal '+str(runner.goal))
         ###

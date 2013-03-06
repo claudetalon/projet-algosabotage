@@ -12,8 +12,11 @@ class OmnicientBlocker(Blocker):
     reaching the goal.
     """
     def __init__(self):
+        pass
+
+    def setupBlocker(self, position, graph, goal):
         self.maxLevel=1
-        return
+        self.bestScore=-10000
 
     """
     Main function
@@ -26,10 +29,13 @@ class OmnicientBlocker(Blocker):
         self.timeout=False
         self.move=self.blockerPlay(position,graph,goal, 1, -10000, 10000)
 
+        # Search only on pertinent edges
+        interestingGraph=self.getInterestingGraph(position, graph, goal)
+
         # Loop for trying differents depths
-        while self.move[0]!=10000 and self.maxLevel<5 and not self.timeout:
+        while self.move[0]!=10000 and self.maxLevel<10 and not self.timeout:
             self.maxLevel+=1
-            thread = Thread(target = self.blockerThread, args=(position,graph,goal))
+            thread = Thread(target = self.blockerThread, args=(position,interestingGraph,goal))
             thread.start()
             thread.join(time)
             if thread.isAlive():
@@ -43,22 +49,50 @@ class OmnicientBlocker(Blocker):
 
         # If not move is found, remove the first edge
         if(self.move[1]==(-1,-1)):
-            for (a,b) in enumerate(graph):
+            for (a,b) in enumerate(interestingGraph):
                         for (c,d) in enumerate(b):
                             if d>0:
-                                self.move[1]=(a,c)
+                                self.move=(-10000,(a,c))
         writeIntoFile('removed'+str(self.move[1]))
         graph[self.move[1][0]][self.move[1][1]]-=1
+        if self.move[0]>self.bestScore:
+            self.bestScore=self.move[0]
         return
+
+    """
+    getInresestingGraph
+    Build a graph with only revealand edges for the alpa-beta searches
+    It keeps only the edges found in the pathes from the runner to the goal
+    Parameters:
+        position: runner's position
+        graph: current graph
+        goal: runner's goal
+    Return value : the new graph
+    """
+    def getInterestingGraph(self,position,graph,goal):
+        size=len(graph)
+        iGraph=[[0]*size for _ in range(size)]
+        for path in find_all_paths(graph, position, goal):
+            maxEdge=len(path)-1
+            for a in range(0,maxEdge):
+                src=path[a]
+                dst=path[a+1]
+                iGraph[src][dst]=graph[src][dst]
+        return iGraph
 
     """
     blockerThread
     The main function of the alpha-beta thread.
     Calls the alpha-beta function, and keeps the result only if it has
     found a move in time.
+    Parameters:
+        position: runner's position
+        graph: current graph
+        goal: runner's goal
+    Return value: none
     """
     def blockerThread(self,position,graph,goal):
-        newMove=self.blockerPlay(position,graph,goal, self.maxLevel, -10000, 10000)
+        newMove=self.blockerPlay(position,graph,goal, self.maxLevel,self.bestScore, 10000)
         if not self.timeout:
             self.move=newMove
 
@@ -78,7 +112,7 @@ class OmnicientBlocker(Blocker):
     """
     def blockerPlay(self, position, graph, goal, level, alpha, beta):
         if self.timeout:
-            return(0,(0,0))
+            return(-10000,(0,0))
         retEdge=(-1,-1)
         for (a,b) in enumerate(graph):
             for (c,d) in enumerate(b):

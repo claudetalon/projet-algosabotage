@@ -11,8 +11,19 @@ class Blocker:
         graph : current graph
         goal : goal node
         time : time limit to compute the move
+    Return value : none
     """
-
-        Return value : none
     def play(self, position,graph, goal, time):
-        return
+        pass
+
+    """
+    Setup of the blocker.
+    Called at the begining of the game.
+    Parameters:
+        position : runner's position
+        graph : current graph
+        goal : goal node
+    Return value : none
+    """
+    def setupBlocker(self, current,graph,goal):
+        pass
