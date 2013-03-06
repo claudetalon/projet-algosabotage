@@ -16,7 +16,7 @@ class FinishBlocker(OmnicientBlocker):
     à faire une seule fois avant de commencer le jeu
     pour évaluer si oui ou non ca vaut la peine d'enlever toutes les aretes du goal
     '''
-    def setupBlocker(self,begin,graph,goal):
+    def setupBlocker(self,begin,graph,goal,time):
         
         '''chercher tout les chemins entre le debut et l arrivee'''
         pathlist = find_all_paths(graph, begin, goal)

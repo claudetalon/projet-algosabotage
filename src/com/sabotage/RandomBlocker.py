@@ -6,7 +6,7 @@ class RandomBlocker(Blocker):
     def __init__(self): 
         return
 
-    def play(self, position, graph, goal):
+    def play(self, position, graph, goal, time):
     
         nbEdges=0
         for i in graph:

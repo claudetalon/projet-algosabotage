@@ -43,7 +43,7 @@ if __name__ == '__main__':
 
     graphList = maxtrixListGenerator(nbGraph, nbVertex, nbEdges)
 
-    for i in range(0, nbGraph) :
+    for i in range(0, nbGraph-1) :
         run = True
         graph = graphList[i]
         current = 0
@@ -52,8 +52,9 @@ if __name__ == '__main__':
         writeIntoFile('begin')
 
         runner = Runner(graph, current, goal)
-        blocker = FinishBlocker()
-        blocker.setupBlocker(current,graph,goal)
+        blocker = OmnicientBlocker()        
+        #blocker = FinishBlocker()
+        #blocker.setupBlocker(current,graph,goal)
    
         writeIntoFile('runner start '+str(runner.current)+' goal '+str(runner.goal))
         ###
@@ -69,6 +70,6 @@ if __name__ == '__main__':
                     writeIntoFile('runner has lost')
                 continue
 
-            blocker.play(current, graph, goal)            
+            blocker.play(current, graph, goal, 20)            
         ###
         writeIntoFile('end')

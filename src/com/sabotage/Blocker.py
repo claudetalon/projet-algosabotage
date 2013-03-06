@@ -2,5 +2,5 @@ class Blocker:
     def __init__(self): 
         return
     
-    def play(self, position,graph, goal):
+    def play(self, position,graph, goal, time):
         return
