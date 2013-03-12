@@ -3,6 +3,7 @@ import copy
 from PathsAlgo import find_all_paths
 from Trace import writeIntoFile
 from threading import Thread
+from time import localtime
 
 class OmnicientBlocker(Blocker):
 
@@ -26,6 +27,8 @@ class OmnicientBlocker(Blocker):
     a winning strategy.
     """
     def play(self, position, graph, goal, time):
+        startTime=localtime()
+
         self.timeout=False
         self.move=self.blockerPlay(position,graph,goal, 1, -10000, 10000)
 
@@ -37,7 +40,7 @@ class OmnicientBlocker(Blocker):
             self.maxLevel+=1
             thread = Thread(target = self.blockerThread, args=(position,interestingGraph,goal))
             thread.start()
-            thread.join(time)
+            thread.join(startTime-localtime()+time)
             if thread.isAlive():
                 self.timeout=True
                 self.maxLevel-=1
@@ -153,7 +156,7 @@ class OmnicientBlocker(Blocker):
                     return -10000
                 else:
                     if level==0:
-                        score=-10000+len(find_all_paths(graph, a, goal))
+                        score=10000-len(find_all_paths(graph, a, goal))
                     else:
                         score=self.blockerPlay(a,graph,goal,level-1,alpha,beta)[0]
                     if score<beta:
