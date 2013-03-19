@@ -1,36 +1,50 @@
 from random import randint
 from Trace import writeIntoFile
 
-def find_all_paths(graph, start, end, path=[]):
+def findSuccessors(graph):
+    successors=[]
+    for a,b in enumerate(graph):
+        nodeSuccessors=[]
+        for c,d in enumerate(b):
+            if d>=1:
+                nodeSuccessors.append(c)
+        successors.append(nodeSuccessors)
+    return successors
+
+def find_all_paths(graph, start, end, path=[], ignored=[], successors=[]):
 
     if (start == end and path == []) or start > len(graph):
         return []
 
     path = path + [start]
+
+    if ignored == [] :
+        ignored = [0]*len(graph)
+
+    if successors == []:
+        successors = findSuccessors(graph)
+
     if start == end:
         return [path]
-    
+
+    ignored[start] += 1    
     paths = []
     
-    # Calcul des successeurs de start
-    l = []
-    for i,j in enumerate(graph[start]):
-        if graph[start][i] >= 1:
-            l.append(i)
-    
+    l = successors[start]
+
     for node in l:
-        if node not in path:
-            newpaths = find_all_paths(graph, node, end, path)
-            for newpath in newpaths:
-                paths.append(newpath)
-                
+        if ignored[node] == 0:
+            newpaths = find_all_paths(graph, node, end, path, ignored, successors)
+            paths.extend(newpaths)
+
+    ignored[start] -= 1   
     return paths
 
 def vertex_of_optimized_path(graph, pathsList):
 
     valpath = str(len(pathsList))
     writeIntoFile('The runner has found paths : ' + valpath)
-    writeIntoFile(str(pathsList))
+    #writeIntoFile(str(pathsList))
 
     # Cannot go to goal
     if len(pathsList) == 0:
