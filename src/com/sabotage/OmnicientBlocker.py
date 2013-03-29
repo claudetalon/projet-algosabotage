@@ -63,7 +63,7 @@ class OmnicientBlocker(Blocker):
         graph[self.move[1][0]][self.move[1][1]]-=1
         if self.move[0]>self.bestScore:
             self.bestScore=self.move[0]
-        return
+        return graph[self.move[1][0]][self.move[1][1]]
 
     """
     getInresestingGraph

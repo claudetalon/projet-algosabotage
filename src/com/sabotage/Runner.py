@@ -9,9 +9,8 @@ class Runner(object):
         self._goal = goal
         
     def play(self, graph, current, goal):
-        pathsList = find_all_paths(graph, current, goal, [])
+        pathsList = find_all_paths(graph, current, goal)
         return vertex_of_optimized_path(graph, pathsList)
-    
     @property
     def graph(self):
         return self._graph

@@ -3,7 +3,7 @@
 from RandomBlocker import RandomBlocker
 from OmnicientBlocker import OmnicientBlocker
 from FinishBlocker import FinishBlocker
-from Runner import Runner
+from Runner_Alpha_Beta import Runner_Alpha_Beta
 from Trace import writeIntoFile
 from Matrix import maxtrixListGenerator
 
@@ -36,7 +36,7 @@ if __name__ == '__main__':
         
     ''' graphs types '''
     nbVertex = 10
-    nbEdges = 25
+    nbEdges = 51
 
     ''' graph list length '''
     nbGraph = 10
@@ -51,15 +51,15 @@ if __name__ == '__main__':
 
         writeIntoFile('begin')
 
-        runner = Runner(graph, current, goal)
-        blocker = OmnicientBlocker()        
+        runner = Runner_Alpha_Beta(graph, current, goal)
+        blocker = OmnicientBlocker()
         #blocker = FinishBlocker()
         blocker.setupBlocker(current,graph,goal)
    
-        writeIntoFile('runner start '+str(runner.current)+' goal '+str(runner.goal))
+        writeIntoFile('runner start '+str(runner._current)+' goal '+str(runner._goal))
         ###
         while(run):
-            newPos = runner.play(graph, current, goal)        
+            newPos = runner.play(current, graph, goal, 5)
             writeIntoFile('runner old position '+str(current)+' new position '+str(newPos))
             current=newPos
             if(current == -1 or current == goal):
@@ -69,7 +69,6 @@ if __name__ == '__main__':
                 else:
                     writeIntoFile('runner has lost')
                 continue
-
-            blocker.play(current, graph, goal, 20)            
+            blocker.play(current, graph, goal, 5)
         ###
         writeIntoFile('end')
