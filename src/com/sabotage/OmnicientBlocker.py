@@ -1,6 +1,8 @@
 from Blocker import Blocker
 import copy
+from RelevantRandomBlocker import RelevantRandomBlocker
 from PathsAlgo import find_all_paths
+from PathsAlgo import getInterestingGraph
 from Trace import writeIntoFile
 from threading import Thread
 from time import clock
@@ -32,10 +34,20 @@ class OmnicientBlocker(Blocker):
         self.timeout=False
 
         # Search only on pertinent edges
-        interestingGraph=self.getInterestingGraph(position, graph, goal)
+        interestingGraph=getInterestingGraph(position, graph, goal)
 
         # At least, always try with a level 1 search
+        thread = Thread(target = self.blockerThread, args=(position,interestingGraph,goal))
+        thread.start()
+        thread.join(startTime-clock()+time)
         self.move=self.blockerPlay(position,interestingGraph,goal, 0, -10000, 10000)
+        if thread.isAlive():
+            self.timeout=True
+            self.maxLevel-=1
+            writeIntoFile('timeout level 0')
+            r=RelevantRandomBlocker()
+            r.play(position,graph,goal,time)
+            return
 
         # Loop for trying differents depths
         if clock()-startTime<time:
@@ -47,7 +59,7 @@ class OmnicientBlocker(Blocker):
                 if thread.isAlive():
                     self.timeout=True
                     self.maxLevel-=1
-                    writeIntoFile('timeout')
+                    writeIntoFile('timeout level '+str(self.maxLevel))
         if self.move[0]==10000:
             self.maxLevel-=2
         else:
@@ -65,26 +77,7 @@ class OmnicientBlocker(Blocker):
             self.bestScore=self.move[0]
         return graph[self.move[1][0]][self.move[1][1]]
 
-    """
-    getInresestingGraph
-    Build a graph with only revealand edges for the alpa-beta searches
-    It keeps only the edges found in the pathes from the runner to the goal
-    Parameters:
-        position: runner's position
-        graph: current graph
-        goal: runner's goal
-    Return value : the new graph
-    """
-    def getInterestingGraph(self,position,graph,goal):
-        size=len(graph)
-        iGraph=[[0]*size for _ in range(size)]
-        for path in find_all_paths(graph, position, goal):
-            maxEdge=len(path)-1
-            for a in range(0,maxEdge):
-                src=path[a]
-                dst=path[a+1]
-                iGraph[src][dst]=graph[src][dst]
-        return iGraph
+
 
     """
     blockerThread

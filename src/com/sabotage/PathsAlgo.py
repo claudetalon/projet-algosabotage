@@ -94,3 +94,24 @@ def edges_number(path, graph):
         edges = edges + graph[path[i]][path[i+1]]
 
     return edges
+
+"""
+getInresestingGraph
+Build a graph with only revealant edges for the alpa-beta searches
+It keeps only the edges found in the pathes from the runner to the goal
+Parameters:
+    position: runner's position
+    graph: current graph
+    goal: runner's goal
+Return value : the new graph
+"""
+def getInterestingGraph(position,graph,goal):
+    size=len(graph)
+    iGraph=[[0]*size for _ in range(size)]
+    for path in find_all_paths(graph, position, goal):
+        maxEdge=len(path)-1
+        for a in range(0,maxEdge):
+            src=path[a]
+            dst=path[a+1]
+            iGraph[src][dst]=graph[src][dst]
+    return iGraph
