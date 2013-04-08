@@ -1,6 +1,5 @@
 from Blocker import Blocker
 import copy
-from RelevantRandomBlocker import RelevantRandomBlocker
 from PathsAlgo import find_all_paths
 from PathsAlgo import getInterestingGraph
 from Trace import writeIntoFile
@@ -45,8 +44,8 @@ class OmnicientBlocker(Blocker):
             self.timeout=True
             self.maxLevel-=1
             writeIntoFile('timeout level 0')
-            r=RelevantRandomBlocker()
-            r.play(position,graph,goal,time)
+            r=RandomBlocker()
+            r.randomSearch(position,graph,interestingGraph,goal,time)
             return
 
         # Loop for trying differents depths

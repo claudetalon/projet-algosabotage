@@ -13,10 +13,12 @@ class RandomBlocker(Blocker):
         return
 
     def play(self, position, graph, goal, time):
-    
+        self.randomRemove(position, graph, graph, goal, time)
+
+    def randomRemove(self, position, removeGraph, searchGraph, time):
         # Compute the number of edges
         nbEdges=0
-        for i in graph:
+        for i in searchGraph:
             for j in i:
                 nbEdges+=j
         
@@ -26,7 +28,7 @@ class RandomBlocker(Blocker):
             for (c,d) in enumerate(b):
                 if d>0:
                     if removed<d:
-                        graph[a][c]-=1
+                        removeGraph[a][c]-=1
                         writeIntoFile('removed '+'('+str(a)+','+str(c)+')')
                         return
                     else:
