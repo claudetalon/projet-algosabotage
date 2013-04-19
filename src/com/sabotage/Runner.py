@@ -1,7 +1,7 @@
 class Runner:
     """Abstract blocker class"""
 
-    def __init__(self): 
+    def __init__(self, graph, current, goal): 
         return
 
     """

@@ -52,7 +52,7 @@ if __name__ == '__main__':
 
         writeIntoFile('begin')
 
-        runner = Runner_Alpha_Beta(graph, current, goal)
+        runner = BaseRunner(graph, current, goal)
         blocker = OmnicientBlocker()
         #blocker = FinishBlocker()
         blocker.setupBlocker(current,graph,goal)
