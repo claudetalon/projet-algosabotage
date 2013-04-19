@@ -3,6 +3,7 @@
 from RandomBlocker import RandomBlocker
 from OmnicientBlocker import OmnicientBlocker
 from FinishBlocker import FinishBlocker
+from BaseRunner import BaseRunner
 from Runner_Alpha_Beta import Runner_Alpha_Beta
 from Trace import writeIntoFile
 from Matrix import maxtrixListGenerator

@@ -4,8 +4,9 @@ from PathsAlgo import find_all_paths
 from Trace import writeIntoFile
 from threading import Thread
 from time import clock
+from Runner import Runner
 
-class Runner_Alpha_Beta(object):
+class Runner_Alpha_Beta(Runner):
 
     def __init__(self, graph, current, goal):
         self._graph = graph

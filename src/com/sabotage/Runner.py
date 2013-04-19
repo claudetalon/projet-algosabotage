@@ -1,36 +1,18 @@
-from PathsAlgo import find_all_paths
-from PathsAlgo import vertex_of_optimized_path
+class Runner:
+    """Abstract blocker class"""
 
-class Runner(object):
+    def __init__(self): 
+        return
 
-    def __init__(self, graph, current, goal):
-        self._graph = graph
-        self._current = current
-        self._goal = goal
-        
-    def play(self, graph, current, goal):
-        pathsList = find_all_paths(graph, current, goal)
-        return vertex_of_optimized_path(graph, pathsList)
-    @property
-    def graph(self):
-        return self._graph
-    
-    @property
-    def current(self):
-        return self._current
-    
-    @property
-    def goal(self):
-        return self._goal
-    
-    @graph.setter
-    def graph(self, graph):
-        self._graph = graph
-        
-    @current.setter
-    def current(self, current):
-        self._current = current
-        
-    @goal.setter
-    def goal(self, goal):
-        self._goal = goal
+    """
+    Play a move. Removes one edge from the graph.
+    Parameters:
+        position : runner's position
+        graph : current graph
+        goal : goal node
+        time : time limit to compute the move
+    Return value : none
+    """
+    def play(self, position, graph, goal, time):
+        pass
+		
