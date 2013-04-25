@@ -34,7 +34,7 @@ class Runner_Alpha_Beta(Runner):
             for (c,d) in enumerate(b):
                 if d>0 and d<=level+1:
                     graph[a][c]-=1
-                    score=self.runnerPlay(position,graph,goal,level,alpha,beta,(a,c),d-1)[0]
+                    score=self.runnerPlay(position,graph,goal,level,alpha,beta)[0]
                     graph[a][c]+=1
                     if score>alpha:
                         alpha=score
@@ -44,9 +44,7 @@ class Runner_Alpha_Beta(Runner):
           return (alpha,retEdge)    
         
     # RunnerPlay
-    # lastRemove -> dernier arc enlevé
-    # nEges -> poids restant de l'arc
-    def runnerPlay(self, position,graph, goal, level, alpha, beta, lastRemove, nEdges):
+    def runnerPlay(self, position,graph, goal, level, alpha, beta):
           meilleurCoup = -1
           if self.timeout:
             return (-1,-1)
@@ -56,16 +54,9 @@ class Runner_Alpha_Beta(Runner):
                     return (-10000, a) # Runner wins
                 else:
                     if level==0:
-                        score=10000-len(find_all_paths(graph, a, goal, [position,a])) # A la fin de l'arbre
+                        score=10000-len(find_all_paths(graph, a, goal, [position,a])) # At the leaves
                     else:
-                        if nEdges>0:
-                            start=lastRemove[0]
-                            stop=lastRemove[1]
-                            graph[start][stop]-=1
-                            score=self.runnerPlay(a,graph,goal,level-1,alpha,beta, lastRemove, nEdges-1)[0]
-                            graph[start][stop]+=1
-                        else:
-                            score=self.blockerPlay(a,graph,goal,level-1,alpha,beta)[0]
+                        score=self.blockerPlay(a,graph,goal,level-1,alpha,beta)[0]
                     if score<beta:
                         meilleurCoup = a
                         beta=score

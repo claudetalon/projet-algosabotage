@@ -116,7 +116,7 @@ class OmnicientBlocker(Blocker):
             for (c,d) in enumerate(b):
                 if d>0 and d<=level+1:
                     graph[a][c]-=1
-                    score=self.runnerPlay(position,graph,goal,level,alpha,beta,(a,c),d-1)
+                    score=self.runnerPlay(position,graph,goal,level,alpha,beta)
                     graph[a][c]+=1
                     if score>alpha:
                         alpha=score
@@ -142,7 +142,7 @@ class OmnicientBlocker(Blocker):
     to the goal.
     """
 
-    def runnerPlay(self, position,graph, goal, level, alpha, beta, lastRemove, nEdges):
+    def runnerPlay(self, position,graph, goal, level, alpha, beta):
         if self.timeout:
             return 0
         for (a,b) in enumerate(graph[position]):
@@ -153,14 +153,7 @@ class OmnicientBlocker(Blocker):
                     if level==0:
                         score=10000-len(find_all_paths(graph, a, goal, [position,a]))
                     else:
-                        if nEdges>0:
-                            start=lastRemove[0]
-                            stop=lastRemove[1]
-                            graph[start][stop]-=1
-                            score=self.runnerPlay(a,graph,goal,level-1,alpha,beta, lastRemove, nEdges-1)
-                            graph[start][stop]+=1
-                        else:
-                            score=self.blockerPlay(a,graph,goal,level-1,alpha,beta)[0]
+                        score=self.blockerPlay(a,graph,goal,level-1,alpha,beta)[0]
                     if score<beta:
                         beta=score
                         if alpha>=beta:
